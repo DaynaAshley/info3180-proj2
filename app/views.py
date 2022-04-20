@@ -9,6 +9,7 @@ from app import app,db,login_manager
 from flask import render_template, request, jsonify, send_file,g, make_response,redirect, url_for,flash,send_from_directory
 import os
 from app.models import *
+from flask_wtf.csrf import generate_csrf
 from werkzeug.security import check_password_hash
 from app.forms import *
 from werkzeug.utils import secure_filename
@@ -121,6 +122,9 @@ def logout():
     logout_user()
     return jsonify(status=200)
 
+@app.route('/api/csrf-token', methods=['GET'])
+def get_csrf():
+    return jsonify({'csrf_token': generate_csrf()})
 
 
 
