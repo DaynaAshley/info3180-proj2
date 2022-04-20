@@ -21,6 +21,7 @@ from flask import _request_ctx_stack
 from functools import wraps
 import datetime
 
+import logging
 
 ###
 # Routing for your application.
@@ -70,7 +71,7 @@ def generate_token(id,name):
     }
     token = jwt.encode(payload, app.config['SECRET_KEY'], algorithm='HS256')
 
-    return jsonify(error=None, data={'token': token}, message="Token Generated")
+    return token
 
 
 @app.route('/api/register', methods=['POST'])
@@ -78,21 +79,21 @@ def register():
     form = RegisterForm()
    
     if request.method == 'POST' and form.validate_on_submit():
-        current_dt = datetime.now()
+        current_dt = datetime.datetime.now()
         image = form.photo.data
         filename = secure_filename(image.filename)
         
-        username = form.username.data, 
-        password = form.password.data, 
-        name = form.fullname.data,
-        email = form.email.data, 
-        location = form.location.data, 
-        biography = form.biography.data,
-        photo = filename, 
+        username = form.username.data 
+        password = form.password.data 
+        name = form.fullname.data
+        email = form.email.data 
+        location = form.location.data
+        biography = form.biography.data
+        photo = filename
         date_joined = current_dt.strftime("%Y-%m-%d " + "%X")
 
-        user = Users(username,password,name,email,location,biography,photo,date_joined)
-        db.session.add(user)
+        user_info = Users(username,password,name,email,location,biography,photo,date_joined)
+        db.session.add(user_info)
         db.session.commit()
         
         image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -102,19 +103,21 @@ def register():
 @app.route('/api/auth/login', methods=['POST'])
 def login():
     form = LoginForm()
+   
     if form.validate_on_submit() and request.method == 'POST':
         username = form.username.data
         password = form.password.data
         user = Users.query.filter_by(username=username).first()
         
         if user is not None and check_password_hash(user.password, password):
+
                 login_user(user)    
                 token=generate_token(user.id,user.name)
-
-                resp = make_response(token)
+                resp = make_response(jsonify(error=None, data={'token': token}, message="Token Generated"))
                 resp.set_cookie('token', "Bearer " + token, httponly=True, secure=True)
-                return resp
                 
+                return resp
+        return jsonify(error="Error in login")        
 
 @app.route('/api/auth/logout', methods=['POST'])
 @login_required

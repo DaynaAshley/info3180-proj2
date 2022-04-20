@@ -6,7 +6,7 @@
     <input type="text" name="username" id="username" required/>
 
     <label>Password</label>
-    <input type="password" name="password" id="code" required/>
+    <input type="text" name="password" id="password" required/>
 
     <label>Fullname</label>
     <input type="text" name="fullname" id="name" required/>

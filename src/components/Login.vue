@@ -1,11 +1,11 @@
 <template>
     <h1>Login</h1>
-    <form  id="login" name="login" method="post" @submit.prevent="loginform">
+    <form  id="login" name="login" method="post" @submit.prevent="login">
         <label>Username:</label>
         <input type="text" name="username" id="username" required/>
 
         <label>Password:</label>
-        <input type="password" name="password" id="code" required/>
+        <input type="password" name="password" id="password" required/>
         <div class="btnpos">
             <button class="button loginbtn">Login</button>
         </div>       

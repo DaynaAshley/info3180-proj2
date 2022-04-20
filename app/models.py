@@ -2,7 +2,7 @@ from . import db
 from werkzeug.security import generate_password_hash
 
 class Users(db.Model):
-    __tablename__ = 'Users'
+    __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username=db.Column(db.String(255))
@@ -44,7 +44,7 @@ class Users(db.Model):
 
 
 class Cars(db.Model):
-    __tablename__ = 'Cars'
+    __tablename__ = 'cars'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     description = db.Column(db.String(1000))
@@ -56,8 +56,7 @@ class Cars(db.Model):
     car_type = db.Column(db.String(50))
     price = db.Column(db.Float)
     photo = db.Column(db.String(255), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('Users.id'))
-    users = db.relationship("Users", backref=db.backref("users", uselist=False))
+    user_id = db.Column(db.Integer)
 
     def __init__(self, description, make, model, colour, year, transmission, car_type, price, photo, userid):
         self.description = description
@@ -72,14 +71,12 @@ class Cars(db.Model):
         self.user_id = userid  
    
 class Favourites(db.Model):
-    __tablename__ = 'Favourites'
+    __tablename__ = 'favourites'
 
     id = db.Column(db.Integer, primary_key=True, nullable=False,autoincrement=True)
-    car_id = db.Column(db.Integer, db.ForeignKey('Cars.id'))
-    cars = db.relationship("Cars", backref=db.backref("cars", uselist=False))
+    car_id = db.Column(db.Integer)
     
-    user_id = db.Column(db.Integer, db.ForeignKey('Users.id'))
-    users = db.relationship("Users", backref=db.backref("users", uselist=False))
+    user_id = db.Column(db.Integer)
 
     def __init__(self, car_id, user_id):
         self.car_id = car_id
