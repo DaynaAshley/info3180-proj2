@@ -5,11 +5,20 @@ Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
 
-from app import app,db
-from flask import render_template, request, jsonify, send_file
+from app import app,db,login_manager
+from flask import render_template, request, jsonify, send_file,g, make_response,redirect, url_for,flash,send_from_directory
 import os
 from app.models import *
 from werkzeug.security import check_password_hash
+from app.forms import *
+from werkzeug.utils import secure_filename
+from flask_login import login_user, logout_user, current_user, login_required
+
+# Using JWT
+import jwt
+from flask import _request_ctx_stack
+from functools import wraps
+import datetime
 
 
 ###
@@ -21,7 +30,96 @@ def index():
     return jsonify(message="This is the beginning of our API")
 
 
+def requires_auth(f):
+  @wraps(f)
+  def decorated(*args, **kwargs):
+    auth = request.headers.get('Authorization', None) # or request.cookies.get('token', None) 
 
+    if not auth:
+      return jsonify({'code': 'authorization_header_missing', 'description': 'Authorization header is expected'}), 401
+
+    parts = auth.split()
+
+    if parts[0].lower() != 'bearer':
+      return jsonify({'code': 'invalid_header', 'description': 'Authorization header must start with Bearer'}), 401
+    elif len(parts) == 1:
+      return jsonify({'code': 'invalid_header', 'description': 'Token not found'}), 401
+    elif len(parts) > 2:
+      return jsonify({'code': 'invalid_header', 'description': 'Authorization header must be Bearer + \s + token'}), 401
+
+    token = parts[1]
+    try:
+        payload = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+
+    except jwt.ExpiredSignatureError:
+        return jsonify({'code': 'token_expired', 'description': 'token is expired'}), 401
+    except jwt.DecodeError:
+        return jsonify({'code': 'token_invalid_signature', 'description': 'Token signature is invalid'}), 401
+
+    g.current_user = user = payload
+    return f(*args, **kwargs)
+
+  return decorated
+
+
+def generate_token(id,name):
+    payload = {
+        'sub': id, # subject, usually a unique identifier
+        'name': name
+    }
+    token = jwt.encode(payload, app.config['SECRET_KEY'], algorithm='HS256')
+
+    return jsonify(error=None, data={'token': token}, message="Token Generated")
+
+
+@app.route('/api/register', methods=['POST'])
+def register():
+    form = RegisterForm()
+   
+    if request.method == 'POST' and form.validate_on_submit():
+        current_dt = datetime.now()
+        image = form.photo.data
+        filename = secure_filename(image.filename)
+        
+        username = form.username.data, 
+        password = form.password.data, 
+        name = form.fullname.data,
+        email = form.email.data, 
+        location = form.location.data, 
+        biography = form.biography.data,
+        photo = filename, 
+        date_joined = current_dt.strftime("%Y-%m-%d " + "%X")
+
+        user = Users(username,password,name,email,location,biography,photo,date_joined)
+        db.session.add(user)
+        db.session.commit()
+        
+        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return jsonify(username = username, name = name, photo = filename,
+        email = email, location = location, biography = biography,date_joined = date_joined)
+
+@app.route('/api/auth/login', methods=['POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit() and request.method == 'POST':
+        username = form.username.data
+        password = form.password.data
+        user = Users.query.filter_by(username=username).first()
+        
+        if user is not None and check_password_hash(user.password, password):
+                login_user(user)    
+                token=generate_token(user.id,user.name)
+
+                resp = make_response(token)
+                resp.set_cookie('token', "Bearer " + token, httponly=True, secure=True)
+                return resp
+                
+
+@app.route('/api/auth/logout', methods=['POST'])
+@login_required
+def logout():
+    logout_user()
+    return jsonify(status=200)
 
 
 
