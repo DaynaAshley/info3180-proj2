@@ -114,7 +114,7 @@ def login():
                 login_user(user)    
                 token=generate_token(user.id,user.name)
                 resp = make_response(jsonify(error=None, data={'token': token}, message="Token Generated"))
-                resp.set_cookie('token', "Bearer " + token, httponly=True, secure=True)
+                resp.set_cookie('token', token, httponly=True, secure=True)
                 
                 return resp
         return jsonify(error="Error in login")        
@@ -130,7 +130,39 @@ def get_csrf():
     return jsonify({'csrf_token': generate_csrf()})
 
 
+@app.route('/api/cars', methods=['POST','GET'])
+@login_required
+@requires_auth
+def explore():
+    # # Form data
+    # form = AddCarForm()
 
+    # # Validate file upload on submit
+    # if request.method == 'POST' and form.validate_on_submit():
+    #     # Get file data and save to your uploads folder
+
+    #     file=request.files['file']
+
+    #     filename=secure_filename(file.filename)
+
+    #     file.save(os.path.join(
+    #         app.config['UPLOAD_FOLDER'], filename
+    #     ))
+
+    #     new_car=Cars(title = request.form['title'],num_bed=int(request.form['num_bed']),num_bath=int(request.form['num_bath']),
+    #     location=request.form['location'],price=request.form['price'], type=request.form['type'],
+    #     desc=request.form['desc'],filename=filename)
+       
+    #     db.session.add(new_car)
+    #     db.session.commit()
+
+        cars_list = db.session.query(Cars).order_by(Cars.id.desc()).limit(3)
+        cars=[]
+        for car in cars_list:
+            cars.append(jsonify(id=car.id,description=car.description,year=car.year,make=car.make,model=car.model,
+            colour=car.colour,transmisson=car.transmission,car_type=car.car_type,price=car.price,photo=car.photo,user_id=car.user_id))
+        return cars
+    # return jsonify(errors=form_errors(form))
 
 
 
