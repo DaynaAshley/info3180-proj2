@@ -19,6 +19,26 @@ def index():
     return jsonify(message="This is the beginning of our API")
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ###
 # The functions below should be applicable to all Flask apps.
 ###
