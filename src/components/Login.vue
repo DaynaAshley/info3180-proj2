@@ -1,6 +1,6 @@
 <template>
     <h1>Login</h1>
-    <form  id="login" name="login" method="post" @submit.prevent="login">
+    <form  id="login" name="login" method="post" @submit.prevent="loginform">
         <label>Username:</label>
         <input type="text" name="username" id="username" required/>
 
@@ -13,53 +13,50 @@
 </template>
 
 <script>
-export default {
-    data() {
-        return{
-            csrf_token: ''
-        }
-    },
-    created() {
-        this.getCsrfToken();
-        },
-    
-    method:{
-        login()
-       {
-        let LoginForm=document.getElementById('login');
-        let form_data= new FormData(LoginForm);
-        fetch("/api/auth/login",{
-            method:'POST',
-             body: form_data,
-            headers: {
-            'X-CSRFToken': this.csrf_token
+     
+export default {   
+        data() {     
+            return {
+                 csrf_token: '' 
+            }  
+            }, 
+        created() {     
+                this.getCsrfToken(); 
+            },
+            
+            methods: { 
+               
+                login() {  
+                    let loginform = document.getElementById('login'); 
+                    let form_data = new FormData(loginform);
+                    fetch("/api/auth/login", {     
+                        method: 'POST', 
+                        body: form_data,         
+                        headers: { 
+                            'X-CSRFToken': this.csrf_token         
+                            } 
+                        })     
+                        .then(function (response) {    
+                        return response.json();     
+                        })     
+                        .then(function (data) {         
+                            // display a success message         
+                            console.log(data);    
+                             })     
+                            .catch(function (error) {         
+                                console.log(error);     
+                                });
+                },
+                getCsrfToken() {     
+                    let self = this;     
+                    fetch('/api/csrf-token')       
+                    .then((response) => response.json())      
+                     .then((data) => {         
+                         console.log(data);         
+                         self.csrf_token = data.csrf_token;   
+                        })   
+                } 
             }
-        })
-        .then(function (response) 
-        {
-            return response.json();
-        })
-        .then(function (data)
-         {
-         // display a success message
-            console.log(data);
-        })
-        .catch(function (error) 
-        {
-            console.log(error);
-        });
-    },
-        getCsrfToken() {
-            let self = this;
-            fetch('/api/csrf-token')
-            .then((response) => response.json())
-            .then((data) => {
-            console.log(data);
-            self.csrf_token = data.csrf_token;
-            })
-        }
-    }
-   
 };
 </script>
 
