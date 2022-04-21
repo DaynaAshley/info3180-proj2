@@ -31,6 +31,9 @@
             <li class="nav-item">
               <RouterLink class="nav-link" to="/explore">Explore</RouterLink>
             </li>
+            <li class="nav-item">
+              <RouterLink class="nav-link" to="/cars/new">Add Car</RouterLink>
+            </li>
           </ul>
         </div>
       </div>

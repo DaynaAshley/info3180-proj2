@@ -36,7 +36,7 @@
             methods: { 
                 searchCar() {         
                     let self = this;         
-                    fetch('/api/search?make=&model='+ self.searchMake + self.searchModel+ '&language=en', 
+                    fetch('/api/search?make=&model='+ self.searchMake + self.searchModel, 
                     {     
                         headers: {'Authorization': `Bearer ${request.cookies.get('token') }`}
                         })           

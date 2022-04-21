@@ -7,6 +7,7 @@ This file creates your application.
 
 from app import app,db,login_manager
 from flask import render_template, request, jsonify, send_file,g, make_response,redirect, url_for,flash,send_from_directory
+from flask import request
 import os
 from app.models import *
 from flask_wtf.csrf import generate_csrf
@@ -21,8 +22,6 @@ from flask import _request_ctx_stack
 from functools import wraps
 import datetime
 
-import logging
-
 ###
 # Routing for your application.
 ###
@@ -35,14 +34,14 @@ def index():
 def requires_auth(f):
   @wraps(f)
   def decorated(*args, **kwargs):
-    auth = request.headers.get('Authorization', None) # or request.cookies.get('token', None) 
+    auth = request.cookies.get('token', None) 
 
     if not auth:
       return jsonify({'code': 'authorization_header_missing', 'description': 'Authorization header is expected'}), 401
 
     parts = auth.split()
 
-    if parts[0].lower() != 'bearer':
+    if parts[0].lower() != 'Bearer':
       return jsonify({'code': 'invalid_header', 'description': 'Authorization header must start with Bearer'}), 401
     elif len(parts) == 1:
       return jsonify({'code': 'invalid_header', 'description': 'Token not found'}), 401
@@ -102,6 +101,9 @@ def register():
 
 @app.route('/api/auth/login', methods=['POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    
     form = LoginForm()
    
     if form.validate_on_submit() and request.method == 'POST':
@@ -113,9 +115,9 @@ def login():
 
                 login_user(user)    
                 token=generate_token(user.id,user.name)
-                resp = make_response(jsonify(error=None, data={'token': token}, message="Token Generated"))
+                resp = make_response(jsonify(error=None, data={'token': "Bearer " +token}, message="Token Generated"))
                 resp.set_cookie('token', token, httponly=True, secure=True)
-                
+                # resp.set_cookie('user_id',user.id)
                 return resp
         return jsonify(error="Error in login")        
 
@@ -134,35 +136,46 @@ def get_csrf():
 @login_required
 @requires_auth
 def explore():
-    # # Form data
-    # form = AddCarForm()
-
-    # # Validate file upload on submit
-    # if request.method == 'POST' and form.validate_on_submit():
-    #     # Get file data and save to your uploads folder
-
-    #     file=request.files['file']
-
-    #     filename=secure_filename(file.filename)
-
-    #     file.save(os.path.join(
-    #         app.config['UPLOAD_FOLDER'], filename
-    #     ))
-
-    #     new_car=Cars(title = request.form['title'],num_bed=int(request.form['num_bed']),num_bath=int(request.form['num_bath']),
-    #     location=request.form['location'],price=request.form['price'], type=request.form['type'],
-    #     desc=request.form['desc'],filename=filename)
+    # Form data
+    if current_user.is_authenticated:
        
-    #     db.session.add(new_car)
-    #     db.session.commit()
+        form = AddCarForm()
 
-        cars_list = db.session.query(Cars).order_by(Cars.id.desc()).limit(3)
-        cars=[]
-        for car in cars_list:
-            cars.append(jsonify(id=car.id,description=car.description,year=car.year,make=car.make,model=car.model,
-            colour=car.colour,transmisson=car.transmission,car_type=car.car_type,price=car.price,photo=car.photo,user_id=car.user_id))
-        return cars
-    # return jsonify(errors=form_errors(form))
+        # Validate file upload on submit
+        if request.method == 'POST' and form.validate_on_submit():
+            # Get file data and save to your uploads folder
+            
+            pr = float(form.price.data)
+            image = form.photo.data
+            filename = secure_filename(image.filename)
+
+            description= form.description.data
+            make = form.make.data
+            model= form.model.data
+            colour= form.colour.data
+            year= form.year.data
+            transmission= request.form['transmission']
+            car_type= request.form['tcartype']
+            price= pr
+            photo = filename
+            user_id=request.cookies.get('user_id',None)
+            car = Cars(description, make, model, colour,year, transmission, car_type, price, photo,user_id)
+            db.session.add(car)
+            db.session.commit()
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            
+            return jsonify(description= description, make = make, model= model, colour= colour,
+            year= year, transmission= transmission, car_type= car_type, price= pr, photo = filename,user_id=user_id )
+        
+        elif request.method == 'GET':
+            cars_list = db.session.query(Cars).order_by(Cars.id.desc()).limit(3)
+            cars=[]
+            for car in cars_list:
+                cars.append(jsonify(id=car.id,description=car.description,year=car.year,make=car.make,model=car.model,
+                colour=car.colour,transmisson=car.transmission,car_type=car.car_type,price=car.price,photo=car.photo,user_id=car.user_id))
+            return cars
+        else:
+            return jsonify(errors=form_errors(form))
 
 
 
@@ -172,7 +185,9 @@ def explore():
 
 
 
-
+@login_manager.user_loader
+def load_user(id):
+    return Users.query.get(int(id))
 
 
 
