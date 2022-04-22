@@ -164,7 +164,7 @@ def explore():
             year= year, transmission= transmission, car_type= car_type, price= pr, photo = filename,user_id=user_id )
         
         if request.method == 'GET':           
-            return jsonify(cars=[i.serialize() for i in  db.session.query(Cars).all()])
+            return jsonify(cars=[i.serialize() for i in  db.session.query(Cars).order_by(Cars.id.desc()).limit(3)])
             
 
 
