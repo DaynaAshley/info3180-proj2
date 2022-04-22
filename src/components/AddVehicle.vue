@@ -71,7 +71,7 @@ export default {
                         body: form_data,         
                         headers: { 
 
-                           'Authorization': myCookie,
+                           'Authorization': `Bearer ${myCookie}`,
                             'X-CSRFToken': this.csrf_token         
                             } 
                         })     

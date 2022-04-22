@@ -34,15 +34,15 @@ def index():
 def requires_auth(f):
   @wraps(f)
   def decorated(*args, **kwargs):
-    auth = request.cookies.get('token', None) 
+    auth = "Bearer "+ request.cookies.get('token', None) 
 
     if not auth:
       return jsonify({'code': 'authorization_header_missing', 'description': 'Authorization header is expected'}), 401
 
     parts = auth.split()
 
-    if parts[0].lower() != 'Bearer':
-      return jsonify({'code': 'invalid_header', 'description': 'Authorization header must start with Bearer'}), 401
+    if parts[0].lower() != 'bearer':
+      return jsonify({'code': 'invalid_header', 'description': 'Authorization header must start with Bearer','token':parts[0]}), 401
     elif len(parts) == 1:
       return jsonify({'code': 'invalid_header', 'description': 'Token not found'}), 401
     elif len(parts) > 2:
@@ -101,9 +101,6 @@ def register():
 
 @app.route('/api/auth/login', methods=['POST'])
 def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-    
     form = LoginForm()
    
     if form.validate_on_submit() and request.method == 'POST':
@@ -117,7 +114,6 @@ def login():
                 token=generate_token(user.id,user.name)
                 resp = make_response(jsonify(error=None, data={'token': "Bearer " +token}, message="Token Generated"))
                 resp.set_cookie('token', token, httponly=True, secure=True)
-                # resp.set_cookie('user_id',user.id)
                 return resp
         return jsonify(error="Error in login")        
 
@@ -155,10 +151,10 @@ def explore():
             colour= form.colour.data
             year= form.year.data
             transmission= request.form['transmission']
-            car_type= request.form['tcartype']
+            car_type= request.form['cartype']
             price= pr
             photo = filename
-            user_id=request.cookies.get('user_id',None)
+            user_id=current_user.get_id()
             car = Cars(description, make, model, colour,year, transmission, car_type, price, photo,user_id)
             db.session.add(car)
             db.session.commit()
@@ -167,15 +163,9 @@ def explore():
             return jsonify(description= description, make = make, model= model, colour= colour,
             year= year, transmission= transmission, car_type= car_type, price= pr, photo = filename,user_id=user_id )
         
-        elif request.method == 'GET':
-            cars_list = db.session.query(Cars).order_by(Cars.id.desc()).limit(3)
-            cars=[]
-            for car in cars_list:
-                cars.append(jsonify(id=car.id,description=car.description,year=car.year,make=car.make,model=car.model,
-                colour=car.colour,transmisson=car.transmission,car_type=car.car_type,price=car.price,photo=car.photo,user_id=car.user_id))
-            return cars
-        else:
-            return jsonify(errors=form_errors(form))
+        if request.method == 'GET':           
+            return jsonify(cars=[i.serialize() for i in  db.session.query(Cars).all()])
+            
 
 
 

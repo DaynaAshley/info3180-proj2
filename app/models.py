@@ -69,6 +69,20 @@ class Cars(db.Model):
         self.price = price
         self.photo = photo
         self.user_id = userid  
+    
+    def serialize(self):
+        return {
+            'description':self.description,
+            'make':self.make,
+            'model':self.model,
+            'colour':self.colour,
+            'year':self.year,
+            'transmission':self.transmission,
+            'car_type':self.car_type,
+            'price':self.price,
+            'photo':self.photo,
+            'user_id':self.user_id
+        }
    
 class Favourites(db.Model):
     __tablename__ = 'favourites'
