@@ -38,7 +38,7 @@ export default {
                 searchCar() {         
                     let self = this;  
                     var myCookie = this.getCookie('token');       
-                    fetch('/api/search?make=&model='+ self.searchMake + self.searchModel, 
+                    fetch('/api/search?make=&model='+ self.searchMake +this.searchModel, 
                     {   
                         method: 'GET',
                         headers: {
