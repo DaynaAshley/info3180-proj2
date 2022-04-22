@@ -177,7 +177,7 @@ def search():
         model=args.get("model")
 
         # [i.serialize() for i in  Cars.query.filter_by(make=make).order_by(Cars.id.desc()).limit(3)]
-        return jsonify(cars=make)
+        return jsonify(cars= [i.serialize() for i in  Cars.query.filter_by(make=make).order_by(Cars.id.desc()).limit(3)])
             
 
 
