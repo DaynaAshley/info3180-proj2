@@ -30,10 +30,28 @@ export default {
         data() {     
             return {
                 cars: [],
-            
+                searchMake:'',
+                searchModel:''
             }  
             },            
             methods: { 
+                searchCar() {         
+                    let self = this;  
+                    var myCookie = this.getCookie('token');       
+                    fetch('/api/search?make=&model='+ self.searchMake + self.searchModel, 
+                    {   
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${myCookie}`  }
+                        })           
+                        .then(function(response) {             
+                            return response.json();           
+                            })           
+                            .then(function(data) {            
+                                 console.log(data);            
+                                  self.cars = data.cars;          
+                            });      
+                    },
 
                 getCookie(cname) {
                     let name = cname + "=";

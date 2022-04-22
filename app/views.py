@@ -5,6 +5,7 @@ Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
 
+
 from app import app,db,login_manager
 from flask import render_template, request, jsonify, send_file,g, make_response,redirect, url_for,flash,send_from_directory
 from flask import request
@@ -166,6 +167,20 @@ def explore():
         if request.method == 'GET':           
             return jsonify(cars=[i.serialize() for i in  db.session.query(Cars).order_by(Cars.id.desc()).limit(3)])
             
+@app.route('/api/search', methods=['GET'])
+@login_required
+@requires_auth
+def search():
+    if current_user.is_authenticated:
+        args = request.args
+        make=args.get("make")
+        model=args.get("model")
+
+        # [i.serialize() for i in  Cars.query.filter_by(make=make).order_by(Cars.id.desc()).limit(3)]
+        return jsonify(cars=make)
+            
+
+
 
 
 
