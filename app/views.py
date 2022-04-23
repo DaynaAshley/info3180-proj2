@@ -13,6 +13,7 @@ import os
 from app.models import *
 from flask_wtf.csrf import generate_csrf
 from werkzeug.security import check_password_hash
+from sqlalchemy import or_
 from app.forms import *
 from werkzeug.utils import secure_filename
 from flask_login import login_user, logout_user, current_user, login_required
@@ -176,9 +177,24 @@ def search():
         make=args.get("make")
         model=args.get("model")
 
-        # [i.serialize() for i in  Cars.query.filter_by(make=make).order_by(Cars.id.desc()).limit(3)]
-        return jsonify(cars= [i.serialize() for i in  Cars.query.filter_by(make=make).order_by(Cars.id.desc()).limit(3)])
-            
+        if (make=="" or model==""):
+            return jsonify(cars=[i.serialize() for i in  db.session.query(Cars).filter(or_(Cars.model==model,Cars.make==make))])
+        return jsonify(cars=[i.serialize() for i in  db.session.query(Cars).filter(Cars.model==model,Cars.make==make)])
+
+
+@app.route('/api/cars/<card_id>', methods=['GET'])
+@login_required
+@requires_auth
+def cars_details(card_id):
+    car_id=card_id
+    if current_user.is_authenticated and request.method == 'GET':
+        return jsonify(cars=[i.serialize() for i in  db.session.query(Cars).filter(Cars.id==car_id)])
+
+
+
+
+
+
 
 
 

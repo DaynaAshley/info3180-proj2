@@ -72,6 +72,7 @@ class Cars(db.Model):
     
     def serialize(self):
         return {
+            'id':self.id,
             'description':self.description,
             'make':self.make,
             'model':self.model,

@@ -1,6 +1,9 @@
-<template>  
-        <div class="card" style="width: 18rem;">   
-            <img v-bind:src= car.photo class="card-img-side">   
+<template> 
+<ul class="cars__list">
+       
+         <li v-for="car in cars" class="cars__item" v-bind:key="car in cars">
+              <div class="card" style="width: 18rem;">   
+            <img v-bind:src= "'/uploads/' + car.photo" class="card-img-side">   
             <div class="card-body">     
                 <h5 class="card-title">{{car.year}} {{car.make}}</h5>   
                 <p class="card-subtitle mb-2 text-muted">{{car.model}}</p>  
@@ -15,36 +18,56 @@
                 <a href="#" class="btn btn-primary">Email Owner</a>   
             </div> 
         </div>
-
+</li>
+</ul> 
 </template> 
 
-<script> 
-    export default {   
+<script>
+     
+export default {   
         data() {     
             return {
-                 cars: [],
+                cars: [],
+                
             }  
-            }, 
+            },            
             methods: { 
-               
-                viewall() {
-                    let self = this; 
-                    fetch('/api/cars/',
-                    {
-                        headers: {'Authorization': `Bearer ${import.meta.env.VITE_NEWSAPI_TOKEN}` } 
-                    })
-                    .then(function(response) { 
-                        return response.json();           
-                    })           
-                    .then(function(data) {             
-                        console.log(data); 
-                        self.cars = data.cars; 
-                    }); 
+                getCookie(cname) {
+                    let name = cname + "=";
+                    let decodedCookie = decodeURIComponent(document.cookie);
+                    let ca = decodedCookie.split(';');
+                    for(let i = 0; i <ca.length; i++) {
+                      let c = ca[i];
+                      while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                      }
+                      if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                      }
+                    }
+                    return "";
+              } 
+            },
+             created() {  
+                    let self=this;
+                    var myCookie = this.getCookie('token');
+                    var last_segment = window.location.pathname.split('/').pop();
+                    fetch(`/api/cars/${last_segment}`, {     
+                        method: 'GET',       
+                        headers: { 
+                           'Authorization': `Bearer ${myCookie}`      
+                            } 
+                        })     
+                        .then(function(response) {
+                        return response.json();
+                        })
+                        .then(function(data) {
+                        console.log(data);
+                        self.cars = data.cars;
+                        });
                 }
-            }
-    }; 
-    
-</script> 
+};
+</script>
 
 <style>
 img{

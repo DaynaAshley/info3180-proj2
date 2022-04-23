@@ -17,7 +17,7 @@
                 <h5 class="card-title">{{car.year}} {{car.make}}</h5>  
                 <p class="price">{{car.price}}</p>   
                 <p class="card-subtitle mb-2 text-muted">{{car.model}}</p>     
-                <a href="{{url_for('cars', card_id=car.id)}}" class="btn btn-primary">View more details</a>   
+                 <router-link :to="'/cars/' + car.id" >View more Details</router-link>
             </div> 
         </div>
       </li>            
@@ -31,14 +31,15 @@ export default {
             return {
                 cars: [],
                 searchMake:'',
-                searchModel:''
+                searchModel:'',
+                card_id:0,
             }  
             },            
             methods: { 
                 searchCar() {         
                     let self = this;  
                     var myCookie = this.getCookie('token');       
-                    fetch('/api/search?make=&model='+ self.searchMake +this.searchModel, 
+                    fetch('/api/search?make='+ self.searchMake + '&model='+self.searchModel, 
                     {   
                         method: 'GET',
                         headers: {
