@@ -1,23 +1,43 @@
 <template>  
-  <form @submit.prevent="searchCar" class="d-flex flex-column justify-content-center">   
-         <div class="input-group mx-sm-3 mb-2">         
+<link rel="stylesheet" 
+        href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" 
+        integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" 
+        crossorigin="anonymous">
+        <div class="forme">
+  <form @submit.prevent="searchCar"  >   
+         <div class="search">         
+             <div class="searchitem"> 
              <label  for="make_search">Make </label>        
               <input type="search" name="make_search" v-model="searchMake" id="make_search" class="form-control mb-2 mr-sm-2" />     
+              </div>
+                <div class="searchitem"> 
               <label  for="model_search">Model</label>        
-              <input type="search" name="model_search" v-model="searchModel" id="model_search" class="form-control mb-2 mr-sm-2" />            
-              <button class="btn btn-primary mb-2">Search</button>       
-         </div>        
+              <input type="search" name="model_search" v-model="searchModel" id="model_search" class="form-control mb-2 mr-sm-2" />   
+               
+                </div>   
+                 <div class="searchitem"> 
+                      <label id="labelbt"> </label> 
+             <button class="searchbt">Search</button> 
+               
+                </div> 
+                         
+         </div>   
+               
     </form> 
-
+</div>
     <ul class="cars__list"> 
     <li v-for="car in cars" class="cars__item" v-bind:key="car in cars">
         <div class="card" style="width: 18rem;">   
             <img v-bind:src= "'/uploads/' + car.photo" class="card-img-top">   
-            <div class="card-body">     
+            <div class="card-body"> 
+                <div class="tophead">    
                 <h5 class="card-title">{{car.year}} {{car.make}}</h5>  
-                <p class="price">{{car.price}}</p>   
-                <p class="card-subtitle mb-2 text-muted">{{car.model}}</p>     
-                 <router-link :to="'/cars/' + car.id" >View more Details</router-link>
+                <p class="price"><i class="fas fa-thin fa-tag" /> ${{car.price}}</p> 
+                </div>  
+                <p class="card-subtitle mb-2 text-muted" id="model">{{car.model}}</p> 
+                <div class="button">
+                 <router-link :to="'/cars/' + car.id" class="b1">View more details</router-link>
+                 </div>    
             </div> 
         </div>
       </li>            
@@ -91,9 +111,36 @@ export default {
 </script>
 
 <style>
+.forme{
+    padding-left:35px;
+    width: 940px;
+    padding-bottom: 30px;
+    
+}
+.button{
+    
+    background-color: rgb(66, 66, 254);
+    border-radius: 5px;
+    padding:8px;
+    text-align: center;
+}
+
+#model{
+    padding-bottom:50px;
+}
+.b1{
+   text-decoration: none;
+   color: white;
+   text-align: center;
+   
+}
+
+#labelbt{
+    padding-bottom:6px;
+}
 img{
-    width: 300px;
-    height:200px;
+    width: 350px;
+    height:220px;
 }
 
 ul{
@@ -101,19 +148,50 @@ ul{
 }
 
 .cars__list{
+    align-items: center;
     padding-top: 20px;
     display: grid;
     grid-template-columns: repeat(3,300px);
-    grid-gap: 50px;
+    grid-gap: 10px;
 }
 
-.cars__list li{
-    border: 1px solid var(--black);
-    box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;  
-} 
+.tophead{
+    display:flex;
+    gap:20px;
+}
 
+.price{
+    background-color: rgb(20, 160, 20);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    border-radius: 10px;
+    color: white;
+}
+
+.searchbt{
+    background-color: rgb(20, 160, 20);
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 2px;
+    border-radius: 5px;
+    color: white;
+}
+.search{
+    padding-top:30px;
+    padding-bottom:30px;
+    padding-left:80px;
+    display: flex;
+    gap:15px;
+    border-radius: 5px;
+    border: 1px solid rgb(96, 95, 95);
+    background-color: white;
+}
+
+.searchitem{
+    display: grid;
+    grid-template-columns: repeat(1);
+}
 p{
     text-align: left;
 }

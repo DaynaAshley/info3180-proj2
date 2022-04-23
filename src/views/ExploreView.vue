@@ -1,5 +1,5 @@
 <template>
-    <div class="explore container">     
+    <div class="explore_container">     
         <h2>Explore</h2>  
         <Explore /> 
      </div> 
@@ -19,10 +19,11 @@ export default {
 
 <style>
 h2{
-    text-align: center;
+    padding-left: 40px;
     padding-bottom: 20px;
 }
-p{
-    text-align: left;
+
+.explore_container{
+    padding-left: 350px;
 }
 </style> 

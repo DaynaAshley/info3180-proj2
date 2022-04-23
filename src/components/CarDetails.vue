@@ -1,31 +1,54 @@
 <template> 
-<ul class="cars__list">
-       
-         <li v-for="car in cars" class="cars__item" v-bind:key="car in cars">
-              <div class="card" style="width: 18rem;">   
-            <img v-bind:src= "'/uploads/' + car.photo" class="card-img-side">   
-            <div class="card-body">     
-                <h5 class="card-title">{{car.year}} {{car.make}}</h5>   
-                <p class="card-subtitle mb-2 text-muted">{{car.model}}</p>  
-                <p class="card-text">{{car.description}}</p> 
-                <p class="card-text">{{car.model}}</p>
-                <div id="info">
-                    <p class="card-text">Color {{car.colour}}</p>
-                    <p class="card-text">Body Type{{car.car_type}}</p>  
-                    <p class="card-text">Price {{car.price}}</p>
-                    <p class="card-text">Transmission {{car.transmission}}</p>
-                </div>
-                <a href="#" class="btn btn-primary">Email Owner</a>   
-            </div> 
+<link rel="stylesheet" 
+        href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" 
+        integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" 
+        crossorigin="anonymous">
 
-              <form @submit.prevent="addLike" id="addlike">   
-         
-                <button id="like">Like</button>       
-               
-            </form> 
-        </div>
-</li>
-</ul> 
+
+    <ul class="cars__list">
+         <li v-for="car in cars" class="cars__item" v-bind:key="car in cars">
+             <div class="info">
+            <div class="card_img" >   
+                <img v-bind:src= "'/uploads/' + car.photo" > 
+            </div>  
+
+            <div class="card_body">     
+                <h1 class="card-title">{{car.year}} {{car.make}}</h1>   
+                <h5 class="card-subtitle mb-2 text-muted">{{car.model}}</h5>  
+                <p class="card-subtitle mb-2 text-muted">{{car.description}}</p> 
+                <div id="info">
+                    <div id="l">
+                    <p class="card-subtitle mb-2 text-muted">Color</p>
+                    <p class="card-text">{{car.colour}}</p>
+                    </div>
+                    <div id="l">
+                    <p class="card-subtitle mb-2 text-muted">Body Type</p>
+                    <p class="card-text">{{car.car_type}}</p> 
+                    </div>
+                    <div id="l">
+                    <p class="card-subtitle mb-2 text-muted">Price</p> 
+                    <p class="card-text">${{car.price}}</p>
+                    </div>
+                    <div id="l">
+                    <p class="card-subtitle mb-2 text-muted">Transmission</p> 
+                    <p class="card-text">{{car.transmission}}</p>
+                    </div>
+                </div>
+                <div id="l2">
+                <a href="#" class="btn btn-success">Email Owner</a>   
+            
+
+                <form @submit.prevent="addLike" id="addlike">   
+            
+                    <button id="like"><i id="heart" class="fas fa-heart" /></button>       
+                
+                </form> 
+                </div>
+            </div> 
+            </div>
+    </li>
+    </ul> 
+
 </template> 
 
 <script>
@@ -111,36 +134,60 @@ export default {
 </script>
 
 <style>
-img{
-    width: 300px;
-    height:200px;
+h1{
+    padding-top: 25px;
 }
 
+h5{
+    padding-bottom: 30px;
+}
+.info{
+    display:flex;
+    gap: 50px;
+}
+img{
+    width: 500px;
+    height:600px;
+}
+
+.cars__item{
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    width:1100px
+}
+
+.cars__list{
+    padding-top: 50px;
+}
 ul{
     list-style-type: none;
 }
 
-/* .news__list{
-    padding-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(3,300px);
-    grid-gap: 50px;
-}
-
-.news__list li{
-    border: 1px solid var(--black);
-    box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    width:300px;
-    border-bottom: 10px solid green;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;  
-} */
-
-p{
-    text-align: left;
-}
 #info{
-    padding: 15px;
-    text-align: left;
+    padding-top: 20px;
+    display:grid;
+    grid-template-columns: repeat(2,150px);
+    grid-gap:50px;
+    padding-bottom: 100px;
+}
+
+#l{
+    display:inline-flex;
+    gap:10px
+}
+
+#l2{
+    display: flex;
+    gap:300px;
+}
+
+#heart{
+   color: red;
+}
+#like{
+    border-radius: 50%;
+    background-color: white;
+
 }
 </style>
