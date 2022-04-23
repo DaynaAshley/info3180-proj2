@@ -34,6 +34,9 @@
             <li class="nav-item">
               <RouterLink class="nav-link" to="/cars/new">Add Car</RouterLink>
             </li>
+            <li class="nav-item">
+              <RouterLink class="nav-link" to="/users/:user_id">My Profile</RouterLink>
+            </li>
           </ul>
         </div>
       </div>

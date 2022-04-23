@@ -148,8 +148,8 @@ def explore():
             filename = secure_filename(image.filename)
 
             description= form.description.data
-            make = form.make.data
-            model= form.model.data
+            make = form.make.data.strip()
+            model= form.model.data.strip()
             colour= form.colour.data
             year= form.year.data
             transmission= request.form['transmission']
@@ -182,36 +182,50 @@ def search():
         return jsonify(cars=[i.serialize() for i in  db.session.query(Cars).filter(Cars.model==model,Cars.make==make)])
 
 
-@app.route('/api/cars/<card_id>', methods=['GET'])
+@app.route('/api/cars/<car_id>', methods=['GET'])
 @login_required
 @requires_auth
-def cars_details(card_id):
-    car_id=card_id
+def cars_details(car_id):
+    car_id=car_id
     if current_user.is_authenticated and request.method == 'GET':
         return jsonify(cars=[i.serialize() for i in  db.session.query(Cars).filter(Cars.id==car_id)])
 
+@app.route('/api/cars/<car_id>/favourite', methods=['POST'])
+@login_required
+@requires_auth
+def addfavourite(card_id):
+    car_id=card_id
+    if current_user.is_authenticated and request.method == 'POST':
+        fav_car = Favourites(car_id,current_user.get_id())
+        db.session.add(fav_car)
+        db.session.commit()
+        return jsonify(message= "Car Successfully Favourited",car_id=car_id )
 
 
+@app.route('/api/users/<user_id>', methods=['GET'])
+@login_required
+@requires_auth
+def users_details(user_id):
+    user_id=user_id
+    if current_user.is_authenticated and request.method == 'GET':
+        return jsonify(users=[i.serialize() for i in  db.session.query(Users).filter(Users.id==user_id)])
 
 
-
-
-
-
-
-
-
-
-
-
+@app.route('/api/users/<user_id>/favourites ', methods=['GET'])
+@login_required
+@requires_auth
+def favcars_details(user_id):
+    user_id=user_id
+    if current_user.is_authenticated and request.method == 'GET':
+        fav_cars=db.session.query(Favourites).filter(Favourites.user_id==user_id)
+        for a in fav_cars:
+            db.session.query(Cars).filter(Cars.id==a.car_id)
+        return jsonify(cars=[i.serialize() for i in  db.session.query(Favourites).filter(Favourites.user_id==user_id)])
 
 
 @login_manager.user_loader
 def load_user(id):
     return Users.query.get(int(id))
-
-
-
 
 
 ###

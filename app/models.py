@@ -41,6 +41,18 @@ class Users(db.Model):
     
     def __repr__(self):
         return '<User %r>' % (self.username)
+    
+    def serialize(self):
+        return {
+            'id':self.id,
+            'username':self.username,
+            'name':self.name,
+            'photo':self.photo,
+            'email':self.email,
+            'location':self.location,
+            'biography':self.biography,
+            'date_joined':self.date_joined
+        }
 
 
 class Cars(db.Model):
@@ -97,6 +109,11 @@ class Favourites(db.Model):
         self.car_id = car_id
         self.user_id = user_id
 
+    def serialize(self):
+        return {
+            'car_id':self.car_id,
+            'user_id':self.user_id
+        }
     
 
         
