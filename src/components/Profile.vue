@@ -2,7 +2,7 @@
 
 <ul class="user__list">
        
-         <li v-for="user in users" class="cars__item" v-bind:key="user in userss">
+         <li v-for="user in users" class="cars__item" v-bind:key="user in users">
               <div class="card" style="width: 18rem;">   
             <img v-bind:src= "'/uploads/' + user.photo" class="card-img-side">   
             <div class="card-body">     

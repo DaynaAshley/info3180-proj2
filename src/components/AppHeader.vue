@@ -34,8 +34,10 @@
             <li class="nav-item">
               <RouterLink class="nav-link" to="/cars/new">Add Car</RouterLink>
             </li>
-            <li class="nav-item">
-              <RouterLink class="nav-link" to="/users/:user_id">My Profile</RouterLink>
+            
+            <li class="nav-item" v-if="user_id!=''">
+              
+              <router-link :to="{ name: 'userdetails', params: { user_id } }" class="nav-link">My Profile</router-link>
             </li>
           </ul>
         </div>
@@ -45,7 +47,41 @@
 </template>
 
 <script>
+
 import { RouterLink } from "vue-router";
+
+export default {   
+        data() {     
+            return {
+                user_id: ' '
+            }  
+        },    
+        created(){
+          let self=this;
+            var myCookie =this.getCookie('user');
+            self.user_id=myCookie;
+        },        
+            methods: { 
+                getCookie(cname) {
+                    let name = cname + "=";
+                    let decodedCookie = decodeURIComponent(document.cookie);
+                    let ca = decodedCookie.split(';');
+                    for(let i = 0; i <ca.length; i++) {
+                      let c = ca[i];
+                      while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                      }
+                      if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                      }
+                    }
+                    return "";
+              }
+            }
+};
+
+
+
 </script>
 
 <style>

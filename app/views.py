@@ -7,8 +7,7 @@ This file creates your application.
 
 
 from app import app,db,login_manager
-from flask import render_template, request, jsonify, send_file,g, make_response,redirect, url_for,flash,send_from_directory
-from flask import request
+from flask import request, jsonify,g, make_response
 import os
 from app.models import *
 from flask_wtf.csrf import generate_csrf
@@ -20,7 +19,6 @@ from flask_login import login_user, logout_user, current_user, login_required
 
 # Using JWT
 import jwt
-from flask import _request_ctx_stack
 from functools import wraps
 import datetime
 
@@ -111,11 +109,11 @@ def login():
         user = Users.query.filter_by(username=username).first()
         
         if user is not None and check_password_hash(user.password, password):
-
                 login_user(user)    
                 token=generate_token(user.id,user.name)
                 resp = make_response(jsonify(error=None, data={'token': "Bearer " +token}, message="Token Generated"))
                 resp.set_cookie('token', token, httponly=True, secure=True)
+                resp.set_cookie('user', current_user.get_id(), httponly=False, secure=True)
                 return resp
         return jsonify(error="Error in login")        
 
@@ -211,16 +209,16 @@ def users_details(user_id):
         return jsonify(users=[i.serialize() for i in  db.session.query(Users).filter(Users.id==user_id)])
 
 
-@app.route('/api/users/<user_id>/favourites ', methods=['GET'])
+@app.route('/api/users/<user_id>/favourites', methods=['GET'])
 @login_required
 @requires_auth
 def favcars_details(user_id):
     user_id=user_id
     if current_user.is_authenticated and request.method == 'GET':
-        fav_cars=db.session.query(Favourites).filter(Favourites.user_id==user_id)
-        for a in fav_cars:
-            db.session.query(Cars).filter(Cars.id==a.car_id)
-        return jsonify(cars=[i.serialize() for i in  db.session.query(Favourites).filter(Favourites.user_id==user_id)])
+        fav_cars=[r.car_id for r in db.session.query(Favourites.car_id).filter(Favourites.user_id==user_id)]
+        if fav_cars is None:
+            jsonify(cars="No car Favourited")
+        return jsonify(cars=[i.serialize() for i in  db.session.query(Cars).filter(Cars.id.in_(fav_cars))])
 
 
 @login_manager.user_loader
