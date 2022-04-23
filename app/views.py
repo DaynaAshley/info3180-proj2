@@ -193,8 +193,8 @@ def cars_details(car_id):
 @app.route('/api/cars/<car_id>/favourite', methods=['POST'])
 @login_required
 @requires_auth
-def addfavourite(card_id):
-    car_id=card_id
+def addfavourite(car_id):
+    car_id=car_id
     if current_user.is_authenticated and request.method == 'POST':
         fav_car = Favourites(car_id,current_user.get_id())
         db.session.add(fav_car)
