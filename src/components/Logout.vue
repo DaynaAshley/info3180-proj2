@@ -1,12 +1,3 @@
-<template>
-    <h1>GoodBye</h1>
-<form  id="logout" name="login" method="post" @submit.prevent="logout">
-      
-            <button class="button loginbtn">Login</button>
-            
-    </form>
-</template>
-
 <script>
      
 export default {   
@@ -16,6 +7,7 @@ export default {
             }, 
         created() {     
                 this.logout();
+                 this.$router.push('/');
             },
             
             methods: { 

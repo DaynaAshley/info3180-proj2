@@ -53,8 +53,9 @@ button{
     gap: 20px;
 }
 
-img{
-    height: 100%;
+.logo{
+    height:800px;
+    width: 1000px;
 }
 
 .register{
@@ -69,7 +70,10 @@ export default {
         data() {     
             return {
             }  
-            },            
+            },   
+            created(){
+              localStorage.clear();
+            } ,       
             methods: { 
                register() {         
                    this.$router.push('/register');   

@@ -80,7 +80,12 @@ export default {
                     return "";
               } 
             },
-             created() {  
+             created() { 
+                 const reloaded = localStorage.getItem('reloaded1');
+                if (reloaded !== 'true') {
+                    localStorage.setItem('reloaded1', 'true');
+                    location.reload(); 
+                }
                     let self=this;
                     var myCookie = this.getCookie('token');
                     var last_segment = window.location.pathname.split('/').pop();

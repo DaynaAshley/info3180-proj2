@@ -76,6 +76,8 @@ export default {
             }, 
         created() {     
                 this.getCsrfToken(); 
+                localStorage.setItem('reloaded1', 'false');
+                 localStorage.setItem('reloaded', 'false');
             },
             
             methods: { 

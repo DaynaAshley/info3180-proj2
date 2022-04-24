@@ -114,6 +114,8 @@ export default {
              created() {  
                     let self=this;
                     this.getCsrfToken(); 
+                    localStorage.setItem('reloaded', 'false');
+                    localStorage.setItem('reloaded1', 'false');
                     var myCookie = this.getCookie('token');
                     var last_segment = window.location.pathname.split('/').pop();
                     fetch(`/api/cars/${last_segment}`, {     
