@@ -1,14 +1,14 @@
-<template> 
-        <Login /> 
+<template>     
+        <Home /> 
 </template> 
 
 
 <script>
-import Login from '../components/Login.vue'; 
+import Home from '../components/Home.vue'; 
 export default {   
     data() {     
         return {};
         }, 
-        components: {Login }
+        components: {Home }
     }; 
 </script> 

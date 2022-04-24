@@ -1,7 +1,5 @@
-<template>
-    <div class="carddetails container">     
+<template>    
         <Profile /> 
-     </div> 
 </template> 
 
 

@@ -1,7 +1,5 @@
-<template>
-    <div class="register container">     
+<template>    
         <Register /> 
-     </div> 
 </template> 
 
 

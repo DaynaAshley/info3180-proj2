@@ -1,5 +1,5 @@
 <template>
-    <h1>Login</h1>
+    <h1>Login to your account</h1>
     <form  id="login" name="login" method="post" @submit.prevent="login">
         <label>Username:</label>
         <input type="text" name="username" id="username" required/>

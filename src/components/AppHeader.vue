@@ -23,21 +23,24 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/register" v-if="user_id==''">Register</RouterLink>
+              <RouterLink id="loginto" class="nav-link" to="/register" v-if="user_id==''">Register</RouterLink>
             </li>
             <li class="nav-item">
               <RouterLink class="nav-link" to="/login" v-if="user_id==''">Login</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/explore">Explore</RouterLink>
+              <RouterLink class="nav-link" to="/explore" v-if="user_id!=''">Explore</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/cars/new">Add Car</RouterLink>
+              <RouterLink class="nav-link" to="/cars/new" v-if="user_id!=''">Add Car</RouterLink>
             </li>
             
             <li class="nav-item" v-if="user_id!=''">
               
               <router-link :to="{ name: 'userdetails', params: { user_id } }" class="nav-link">My Profile</router-link>
+            </li>
+            <li class="nav-item">
+              <RouterLink class="nav-link" id="lg" to="/logout" v-if="user_id!=''">Logout</RouterLink>
             </li>
           </ul>
         </div>
@@ -92,5 +95,13 @@ export default {
 #main{
   padding-left: 30px;
   padding-right: 220px;
+}
+
+#loginto{
+  padding-left: 1820px;
+}
+
+#lg{
+  padding-left: 1600px;
 }
 </style>
