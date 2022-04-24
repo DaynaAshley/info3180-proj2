@@ -7,7 +7,7 @@
         <label>Password:</label>
         <input type="password" name="password" id="password" required/>
         <div class="btnpos">
-            <button class="button loginbtn">Login</button>
+            <button @click="explore()" class="button loginbtn">Login</button>
         </div>       
     </form>
 </template>
@@ -25,7 +25,10 @@ export default {
             },
             
             methods: { 
-               
+               explore(){
+                   this.$router.push('/explore');
+                  
+               },
                 login() {  
                     let loginform = document.getElementById('login'); 
                     let form_data = new FormData(loginform);

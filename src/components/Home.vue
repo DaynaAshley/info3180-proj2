@@ -12,7 +12,8 @@
       </div>
     
       <div class="photo">
-        <!-- <img alt="Sample car" class="logo" src="@/assets/car.jpg" width=115%> -->
+           <img alt="stock pic" class="logo" src="@/assets/car.jpg"  />
+       
       </div>
 
     </div> 
@@ -22,36 +23,44 @@
 
 <style>
 .container{
-  padding: none;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  text-align: center;
-  margin: none;
-  gap:none;
+  display: flex;
+  gap:350px;
 }
-p{
-  margin: 10px;
+
+.info{
+    padding-top: 200px;
+
+}
+
+h1{
+    font-weight: bolder;
+    font-size: 60px;
+    padding-bottom: 20px;
 }
 button{
     background: limegreen;
     border: 0;
     padding: 10px 20px; 
-    margin-top: 20px; 
+    padding-left: 40px;
+    padding-right: 40px;
     color: white; 
-    border-radius: 20px;
+    border-radius: 5px;
     justify-content: center;
-    margin:4px;
 }
-.info {
-  text-align: center;
-}
+
 .btnpos{
-  text-align: center;
+    display: flex;
+    gap: 20px;
+}
+
+img{
+    height: 100%;
 }
 
 .register{
     background:skyblue;
 }
+
 
 </style>
 
@@ -63,7 +72,7 @@ export default {
             },            
             methods: { 
                register() {         
-                   this.$router.push('/');   
+                   this.$router.push('/register');   
                     },
 
                 login() {

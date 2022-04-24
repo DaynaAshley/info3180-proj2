@@ -91,6 +91,11 @@ export default {
               } 
             },
              created() {  
+                const reloaded = localStorage.getItem('reloaded');
+                if (reloaded !== 'true') {
+                    localStorage.setItem('reloaded', 'true');
+                    location.reload();
+                }
                     let self=this;
                     var myCookie = this.getCookie('token');
                     fetch("/api/cars", {     
@@ -107,6 +112,7 @@ export default {
                         self.cars = data.cars;
                         });
                 }
+             
 };
 </script>
 
