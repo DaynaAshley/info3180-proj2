@@ -1,15 +1,61 @@
-<template>  
+<template>
+    <div class="container">
+      <div class="info">
+        <h1>Buy and Sell Cars Online</h1>
+        <p>United Auto Sales provides the fastest, easiest and most user friendly way to buy or sell cars online.
+          Find a Great Price on the Vehicle You Want.
+        </p>
+        <div class="btnpos">
+          <button @click="register()" class="button register">Register</button> 
+          <button  @click="login()" class="button login">Login</button>
+        </div>
+      </div>
+    
+      <div class="photo">
+        <!-- <img alt="Sample car" class="logo" src="@/assets/car.jpg" width=115%> -->
+      </div>
 
-       
- 
-             <button @click="register()" class="searchbt">Register</button> 
-               <button @click="login()" class="searchbt">Login</button> 
-         
+    </div> 
+  
+     
+</template>
 
-</template> 
+<style>
+.container{
+  padding: none;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  text-align: center;
+  margin: none;
+  gap:none;
+}
+p{
+  margin: 10px;
+}
+button{
+    background: limegreen;
+    border: 0;
+    padding: 10px 20px; 
+    margin-top: 20px; 
+    color: white; 
+    border-radius: 20px;
+    justify-content: center;
+    margin:4px;
+}
+.info {
+  text-align: center;
+}
+.btnpos{
+  text-align: center;
+}
+
+.register{
+    background:skyblue;
+}
+
+</style>
 
 <script>
-     
 export default {   
         data() {     
             return {
@@ -27,93 +73,3 @@ export default {
 };
 </script>
 
-<style>
-.forme{
-    padding-left:35px;
-    width: 940px;
-    padding-bottom: 30px;
-    
-}
-.button{
-    
-    background-color: rgb(66, 66, 254);
-    border-radius: 5px;
-    padding:8px;
-    text-align: center;
-}
-
-#model{
-    padding-bottom:50px;
-}
-.b1{
-   text-decoration: none;
-   color: white;
-   text-align: center;
-   
-}
-
-#labelbt{
-    padding-bottom:6px;
-}
-img{
-    width: 350px;
-    height:220px;
-}
-
-ul{
-    list-style-type: none;
-}
-
-.cars__list{
-    align-items: center;
-    padding-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(3,300px);
-    grid-gap: 10px;
-}
-
-.tophead{
-    display:flex;
-    gap:20px;
-}
-
-.price{
-    background-color: rgb(20, 160, 20);
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 5px;
-    border-radius: 10px;
-    color: white;
-}
-
-.searchbt{
-    background-color: rgb(20, 160, 20);
-    padding-left: 50px;
-    padding-right: 50px;
-    padding-bottom: 2px;
-    border-radius: 5px;
-    color: white;
-}
-.search{
-    padding-top:30px;
-    padding-bottom:30px;
-    padding-left:80px;
-    display: flex;
-    gap:15px;
-    border-radius: 5px;
-    border: 1px solid rgb(96, 95, 95);
-    background-color: white;
-}
-
-.searchitem{
-    display: grid;
-    grid-template-columns: repeat(1);
-}
-p{
-    text-align: left;
-}
-#info{
-    padding: 15px;
-    text-align: left;
-}
-</style>

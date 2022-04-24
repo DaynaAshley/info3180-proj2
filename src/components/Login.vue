@@ -46,6 +46,7 @@ export default {
                             .catch(function (error) {         
                                 console.log(error);     
                                 });
+                        this.$router.push({name:'explore'})
                 },
                 getCsrfToken() {     
                     let self = this;     
@@ -62,5 +63,47 @@ export default {
 
 
 <style>
+h1{
+    text-align: center;
+    padding-top: 10px;
+}
+ form {
+    max-width: 420px;
+    margin: 10px auto;
+    border: 2px lightgray solid;
+    background:white; 
+    border-radius: 10px;
+    text-align: left;
+    padding: 20px;
+}
+input {
 
+    width: 100%;
+    display: block; 
+    box-sizing: border-box; 
+    border: none; 
+    border-bottom: 1px solid;
+    color: #555;
+}
+label {
+    color: #aaa;
+    display: inline-block;
+    margin: 25px 0 15px;
+    font-size: 0.6em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+button {
+    border: 0;
+    padding: 10px 20px; 
+    margin-top: 20px; 
+    color: white; 
+    border-radius: 20px;
+    justify-content: center;
+}
+.loginbtn{
+       background-color:  rgb(0, 184, 245);
+}
 </style>

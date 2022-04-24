@@ -1,5 +1,7 @@
 <template>
+
         <Logout />  
+
 </template> 
 
 

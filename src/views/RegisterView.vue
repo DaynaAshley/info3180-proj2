@@ -1,5 +1,8 @@
+
 <template>    
         <Register /> 
+
+
 </template> 
 
 
