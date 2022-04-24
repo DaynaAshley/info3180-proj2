@@ -117,15 +117,14 @@ def login():
                 return resp
         return jsonify(error="Error in login")        
 
-@app.route('/api/auth/logout', methods=['POST'])
+@app.route('/api/auth/logout', methods=['POST','GET'])
 @login_required
 def logout():
-    if request.method == 'POST':
-        logout_user()
-        resp = make_response(jsonify(error=None, message="Token Deleted"))
-        resp.set_cookie('token', '', httponly=True, secure=True)
-        resp.set_cookie('user', '', httponly=False, secure=True)
-        return jsonify(status=200)
+    logout_user()
+    resp= make_response('', 204) 
+    resp.delete_cookie('token')
+    resp.delete_cookie('user')
+    return resp
 
 @app.route('/api/csrf-token', methods=['GET'])
 def get_csrf():

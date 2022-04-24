@@ -30,7 +30,7 @@
 
  <div id="formgroup1">
     <label>Biography</label>
-    <textarea name="biography" id="biography" rows=5 cols=58 required/>
+    <textarea name="biography" id="biography" rows=5 cols=58  maxlength="250" required/>
     </div>  
 
      <div id="formgroup1">
@@ -54,7 +54,13 @@ export default {
                  text: "Successfully Registered!"
             }  
             }, 
-        created() {     
+        created() { 
+              
+                const reloaded = localStorage.getItem('reloaded');
+                if (reloaded !== 'true') {
+                    localStorage.setItem('reloaded', 'true');
+                    location.reload();
+                }    
                 this.getCsrfToken(); 
             },
             

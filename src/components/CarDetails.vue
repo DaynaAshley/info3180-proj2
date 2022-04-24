@@ -189,6 +189,10 @@ ul{
 #heart{
    color: red;
 }
+#heart:active{
+  color:green;
+  
+}
 #like{
     border-radius: 50%;
     background-color: white;

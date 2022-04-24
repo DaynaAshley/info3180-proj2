@@ -28,7 +28,8 @@ export default {
                  csrf_token: '' 
             }  
             }, 
-        created() {     
+        created() { 
+              localStorage.setItem('reloaded', 'false');    
                 this.getCsrfToken(); 
             },
             
@@ -108,7 +109,7 @@ export default {
 h3 {
   padding-top: 20px;
   padding-bottom: 30px;
-  padding-left: 1080px;
+  padding-left: 1060px;
 }
 
 .loginbtn {

@@ -72,7 +72,13 @@ export default {
             }  
             },   
             created(){
-              localStorage.clear();
+               const reloaded2 = localStorage.getItem('reloaded2');
+                if (reloaded2 !== 'true') {
+                    localStorage.setItem('reloaded2', 'true');
+                    location.reload();
+                   
+                }
+              
             } ,       
             methods: { 
                register() {         
