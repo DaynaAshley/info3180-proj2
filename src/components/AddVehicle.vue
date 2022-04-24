@@ -144,7 +144,8 @@ export default {
 
 #add_car{
     background-color: white;
-  border: 1px solid black;
+ border: 1px solid rgb(188, 188, 188);
+    box-shadow: 0 2px 6px 3px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   padding: 30px;
   border-radius: 5px;
 }

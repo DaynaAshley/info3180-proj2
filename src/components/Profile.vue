@@ -1,24 +1,28 @@
 <template> 
-
+<div class="user_container">
 <ul class="user__list">
-       
-         <li v-for="user in users" class="users__item" v-bind:key="user in users">
-            
-                  <div class="infobody">  
-                        <div class="top">  
+       <li v-for="user in users" class="users__item" v-bind:key="user in users">
+            <div class="infobody">  
+            <div class="top">  
                 <img v-bind:src= "'/uploads/' + user.photo" class="user_img">   
-                
-                <h5 class="card-title">{{user.name}}</h5>   
-                <p class="card-subtitle mb-2 text-muted">@{{user.username}}</p>  
-                <p class="card-text">{{user.biography}}</p> 
                  </div> 
                 <div id="info">
+                    
+                    <h2 class="card-title">{{user.name}}</h2>   
+                <p class="card-subtitle mb-2 text-muted">@{{user.username}}</p>  
+                <p class="card-text">{{user.biography}}</p> 
+                <div id="item">
                   <p class="card-subtitle mb-2 text-muted">Email</p>
                     <p class="card-text">{{user.email}}</p>
+                    </div>
+                     <div id="item">
                     <p class="card-subtitle mb-2 text-muted">Location</p>
                     <p class="card-text">{{user.location}}</p>  
+                    </div>
+                 <div id="item">
                        <p class="card-subtitle mb-2 text-muted">Joined</p>
                     <p class="card-text">{{user.date_joined}}</p>
+                    </div>
                 </div>
                 </div>
            
@@ -27,7 +31,8 @@
 </ul> 
 
 
-<h3>Car Favourited</h3>
+
+<h3>Cars Favourited</h3>
  <ul class="cars__list"> 
     <li v-for="car in cars" class="cars__item" v-bind:key="car in cars">
         <div class="card" style="width: 18rem;">   
@@ -45,7 +50,7 @@
         </div>
       </li>            
     </ul> 
-
+</div>
 </template> 
 
 <script>
@@ -110,14 +115,40 @@ export default {
 </script>
 
 <style>
+.card{
+    border: 1px solid rgb(188, 188, 188);
+    box-shadow: 0 2px 6px 3px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
 .user_img{
     border-radius: 50%;
+    width: 200px;
+    height: 200px;
 }
 
-.infobody{
+#item{
     display:flex;
+    gap:40px;
+}
+.user_container{
+    padding-left: 400px;
+}
+.user__list{
+    width: 940px;
+    padding:60px;
+    border-radius: 5px;
+    border: 1px solid rgb(188, 188, 188);
+    box-shadow: 0 2px 6px 3px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+h3{
+    padding-top: 40px;
+}
+.infobody{
+    display:flex; 
+    gap: 50px;
 
 }
+
 .button{
     
     background-color: rgb(66, 66, 254);
@@ -170,29 +201,6 @@ ul{
     color: white;
 }
 
-.searchbt{
-    background-color: rgb(20, 160, 20);
-    padding-left: 50px;
-    padding-right: 50px;
-    padding-bottom: 2px;
-    border-radius: 5px;
-    color: white;
-}
-.search{
-    padding-top:30px;
-    padding-bottom:30px;
-    padding-left:80px;
-    display: flex;
-    gap:15px;
-    border-radius: 5px;
-    border: 1px solid rgb(96, 95, 95);
-    background-color: white;
-}
-
-.searchitem{
-    display: grid;
-    grid-template-columns: repeat(1);
-}
 p{
     text-align: left;
 }
@@ -200,6 +208,7 @@ p{
     display: grid;
     grid-template-columns: repeat(2);
     grid-gap: 10px;
+    padding-bottom: 30px;
 }
 
 </style>

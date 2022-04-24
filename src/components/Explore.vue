@@ -3,6 +3,7 @@
         href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" 
         integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" 
         crossorigin="anonymous">
+<div id="container">
         <div class="forme">
   <form @submit.prevent="searchCar"  >   
          <div class="search">         
@@ -42,6 +43,7 @@
         </div>
       </li>            
     </ul> 
+    </div>
 </template> 
 
 <script>
@@ -142,6 +144,10 @@ export default {
    
 }
 
+.card{
+    border: 1px solid rgb(188, 188, 188);
+    box-shadow: 0 2px 6px 3px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
 #labelbt{
     padding-bottom:6px;
 }
@@ -191,7 +197,8 @@ ul{
     display: flex;
     gap:15px;
     border-radius: 5px;
-    border: 1px solid rgb(96, 95, 95);
+    border: 1px solid rgb(188, 188, 188);
+    box-shadow: 0 2px 6px 3px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     background-color: white;
 }
 

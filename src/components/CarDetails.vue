@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div id="l2">
-                <a href="#" class="btn btn-success">Email Owner</a>   
+                <button class="email">Email Owner</button>   
             
 
                 <form @submit.prevent="addLike" id="addlike">   
@@ -152,12 +152,14 @@ img{
 
 .cars__item{
     background-color: white;
-    border: 1px solid black;
+    border: 1px solid rgb(188, 188, 188);
+    box-shadow: 0 2px 6px 3px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     border-radius: 5px;
-    width:1100px
+    width:1200px
 }
 
 .cars__list{
+    padding-left:400px;
     padding-top: 50px;
 }
 ul{
@@ -179,7 +181,7 @@ ul{
 
 #l2{
     display: flex;
-    gap:300px;
+    gap:200px;
 }
 
 #heart{
@@ -189,5 +191,18 @@ ul{
     border-radius: 50%;
     background-color: white;
 
+}
+
+.email {
+  background: rgb(53, 193, 53);
+  border: 0;
+  padding-left:60px;
+  padding-right: 60px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  justify-content: center;
 }
 </style>
