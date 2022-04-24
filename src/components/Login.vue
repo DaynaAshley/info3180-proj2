@@ -1,15 +1,23 @@
 <template>
-    <h1>Login to your account</h1>
+    <h3>Login to your account</h3>
+    <div id="form_container">
     <form  id="login" name="login" method="post" @submit.prevent="login">
+        <div class="top">
+            <div id="formgroup">
         <label>Username:</label>
         <input type="text" name="username" id="username" required/>
+    </div>
+            <div id="formgroup">
 
         <label>Password:</label>
         <input type="password" name="password" id="password" required/>
+        </div>
+        </div>
         <div class="btnpos">
-            <button @click="explore()" class="button loginbtn">Login</button>
+            <button @click="explore()" class="loginbtn">Login</button>
         </div>       
     </form>
+    </div>
 </template>
 
 <script>
@@ -65,48 +73,68 @@ export default {
 </script>
 
 
+
 <style>
-h1{
-    text-align: center;
-    padding-top: 10px;
+#form_container{
+  padding-left:1000px;
+  width:1400px;
 }
- form {
-    max-width: 420px;
-    margin: 10px auto;
-    border: 2px lightgray solid;
-    background:white; 
-    border-radius: 10px;
-    text-align: left;
-    padding: 20px;
-}
-input {
 
-    width: 100%;
-    display: block; 
-    box-sizing: border-box; 
-    border: none; 
-    border-bottom: 1px solid;
-    color: #555;
+#login{
+    background-color: white;
+  border: 1px solid  rgb(188, 188, 188);
+  padding: 50px;
+  padding-left: 60px;
+
+  border-radius: 5px;
 }
-label {
-    color: #aaa;
-    display: inline-block;
-    margin: 25px 0 15px;
-    font-size: 0.6em;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+#formgroup,#formgroup1{
+    display:grid;
+    grid-template-columns: repeat(1);
+}
+
+#formgroup1{
+  padding-bottom: 30px;
+}
+
+.top{
+  display:grid;
+  grid-template-columns: repeat(1,200px);
+    grid-gap: 50px;
+   padding-bottom: 40px;
+}
+
+h3 {
+  padding-top: 20px;
+  padding-bottom: 30px;
+  padding-left: 1080px;
+}
+
+.loginbtn {
+  background: rgb(53, 193, 53);
+  border: 0;
+  padding-left:110px;
+  padding-right: 110px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  justify-content: center;
+}
+
+#formgroup input[type="text"],#password  {
+    padding: 10px;
+    border-radius: 5px;
+    border:1px solid rgb(188, 188, 188);
+}
+
+
+
+
+label{
+    color: gray;
     font-weight: bold;
-}
-
-button {
-    border: 0;
-    padding: 10px 20px; 
-    margin-top: 20px; 
-    color: white; 
-    border-radius: 20px;
-    justify-content: center;
-}
-.loginbtn{
-       background-color:  rgb(0, 184, 245);
+    padding-bottom: 5px;
 }
 </style>

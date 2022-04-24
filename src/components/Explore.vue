@@ -56,6 +56,7 @@ export default {
             }  
             },            
             methods: { 
+                
                 searchCar() {         
                     let self = this;  
                     var myCookie = this.getCookie('token');       
@@ -96,7 +97,7 @@ export default {
                     localStorage.setItem('reloaded', 'true');
                     location.reload();
                 }
-                    let self=this;
+                    let self=this; 
                     var myCookie = this.getCookie('token');
                     fetch("/api/cars", {     
                         method: 'GET',       

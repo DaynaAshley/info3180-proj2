@@ -1,36 +1,47 @@
 <template>
     <h1>Register New User</h1>
+    <div id="form_container">
     <form  id="register" name="register" method="POST" enctype="multipart/form-data" @submit.prevent="register" v-if="!savingSuccessful">
-
+ <div class="top">
+       <div id="formgroup">
     <label>Username</label>
     <input type="text" name="username" id="username" required/>
+</div>
 
+ <div id="formgroup">
     <label>Password</label>
-    <input type="password" name="password" id="password" required/>
+    <input type="text" name="password" id="password" required/>
+</div>
 
+<div id="formgroup">
     <label>Fullname</label>
     <input type="text" name="fullname" id="name" required/>
+</div>
 
-
+ <div id="formgroup">
     <label>Email</label>
     <input type="email" name="email" id="email" required/>
-
+</div>
+ <div id="formgroup">
     <label>Location</label>
-    <input type="textarea" name="location" id="location" required/>
+    <input type="text" name="location" id="location" required/>
+</div>
+</div>
 
+ <div id="formgroup1">
     <label>Biography</label>
-    <textarea name="biography" id="biography" required/>
-      
+    <textarea name="biography" id="biography" rows=5 cols=58 required/>
+    </div>  
+
+     <div id="formgroup1">
     <label>Upload Photo</label>
     <input type="file" name="photo" id="photo" required/>
-    
+    </div>
     <div class="btnpos">
          <button class="button send">Register</button>
     </div>
    
     </form>
-    <div class="success" v-if="savingSuccessful"> 
-    {{ this.text }} 
 </div>
 </template>
 
@@ -64,7 +75,8 @@ export default {
                         })     
                         .then(function (data) {         
                             // display a success message        
-                            console.log(data);    
+                            console.log(data); 
+
                              })     
                             .catch(function (error) {         
                                 console.log(error);     
@@ -84,51 +96,81 @@ export default {
 };
 </script>
 
-
 <style>
-h1{
-    text-align: center;
-}
- form {
-    max-width: 420px;
-    margin: 30px auto;
-    border: 2px black solid;
-    background:white; 
-    border-radius: 10px;
-    text-align: left;
-    padding: 40px;
+#form_container{
+  padding-left:600px;
+  width:1350px;
 }
 
-label {
-    color: #aaa;
-    display: inline-block;
-    margin: 25px 0 15px;
-    font-size: 0.6em;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: bold;
+#register{
+    background-color: white;
+  border: 1px solid black;
+  padding: 30px;
+  border-radius: 5px;
 }
-input, textarea {
+#formgroup,#formgroup1{
+    display:grid;
+    grid-template-columns: repeat(1);
+}
 
-    width: 100%;
-    display: block; 
-    box-sizing: border-box; 
-    border: none; 
-    border-bottom: 1px solid;
-    color: #555;
+#formgroup1{
+  padding-bottom: 30px;
 }
-button {
-    background: limegreen;
-    border: 0;
-    padding: 10px 20px; 
-    margin-top: 20px; 
-    color: white; 
-    border-radius: 20px;
-    justify-content: center;
+
+.top{
+  display:grid;
+  grid-template-columns: repeat(2,300px);
+    grid-gap: 50px;
+   padding-bottom: 40px;
 }
- 
+
+h1 {
+  padding-top: 20px;
+  padding-bottom: 30px;
+  padding-left: 600px;
+}
+
 .send {
-    text-align: center;
-    background:rgb(53, 128, 53)
+  background: rgb(53, 193, 53);
+  border: 0;
+  padding-left:60px;
+  padding-right: 60px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  justify-content: center;
+}
+
+#formgroup input[type="text"],#email  {
+    padding: 10px;
+    border-radius: 5px;
+    border:1px solid rgb(188, 188, 188);
+}
+
+#photo{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+select{
+    width: 278px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+     border:1px solid rgb(188, 188, 188);
+
+}
+
+#biography{
+    border:1px solid rgb(188, 188, 188);
+}
+
+label{
+    color: gray;
+    font-weight: bold;
+    padding-bottom: 5px;
 }
 </style>

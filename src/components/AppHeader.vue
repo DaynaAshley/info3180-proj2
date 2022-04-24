@@ -102,6 +102,6 @@ export default {
 }
 
 #lg{
-  padding-left: 1600px;
+  padding-left: 1300px;
 }
 </style>

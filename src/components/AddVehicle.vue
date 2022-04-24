@@ -1,51 +1,69 @@
 <template>
   <H1>Add New Car</H1>
-
+<div id="form_container">
   <form id="add_car" name="add_car" method="POST" enctype="multipart/form-data" @submit.prevent="addcar" >
-    <label> Make </label>
-    <input type="text" name="make" id="make" required />
+    <div class="top">
+          <div id="formgroup">
+          <label> Make </label>
+          <input type="text" name="make" id="make" required />
+        </div>
+        
+         <div id="formgroup">
+        <label> Model</label>
+        <input type="text" name="model" id="model" required />
+      </div>
+    
+     <div id="formgroup">
+        <label>Colour</label>
+        <input type="text" name="colour" id="colour" required />
+    </div>
+    
+     <div id="formgroup">
+        <label>Year</label>
+        <input type="text" name="year" id="year" required />
+    </div>
+    
+     <div id="formgroup">
+        <label>Price</label>
+        <input type="text" name="price" id="price" required />
+    </div>
+       
+         <div id="formgroup">
+          <label for="cartype">Car Type</label>
+          <select name="cartype" id="cartype">
+            <option value="SUV">SUV</option>
+            <option value="Sedan">Sedan</option>
+            <option value="Coupe">Coupe</option>
+            <option value="HatchBack">HatchBack</option>
+            <option value="Wagon">Wagon</option>
+        </select>
+        </div>
 
-    <label> Model</label>
-    <input type="text" name="model" id="model" required />
-
-    <label>Colour</label>
-    <input type="text" name="colour" id="colour" required />
-
-    <label>Year</label>
-    <input type="text" name="year" id="year" required />
-
-    <label>Price</label>
-    <input type="text" name="price" id="price" required />
-
-    <div class="form-group">
+        <div id="formgroup">
       <label for="transmission">Transmission</label>
       <select name="transmission" id="transmission">
         <option value="Automatic">Automatic</option>
         <option value="Manual">Manual</option>
     </select>
     </div>
-
-    <div class="form-group">
-      <label for="cartype">Car Type</label>
-      <select name="cartype" id="cartype">
-        <option value="SUV">SUV</option>
-        <option value="Sedan">Sedan</option>
-        <option value="Coupe">Coupe</option>
-        <option value="HatchBack">HatchBack</option>
-        <option value="Wagon">Wagon</option>
-    </select>
-    </div>
-
+    
+  </div>
+   
+    
+    <div id="formgroup1">
     <label>Description</label>
-    <textarea name="description" id="description" required />
+    <textarea name="description" id="description" rows=5 cols=58 required  />
+</div>
 
+ <div id="formgroup1">
     <label>Upload Photo</label>
     <input type="file" name="photo" id="photo" required />
-
+</div>
     <div class="btnpos">
-      <button class="button send">Save</button>
+      <button @click="explore()" class="send">Save</button>
     </div>
   </form>
+  </div>
 </template>
 
 <script>
@@ -61,7 +79,10 @@ export default {
             },
             
             methods: { 
-               
+                explore(){
+                   this.$router.push('/explore');
+                  
+               },
                 addcar() {  
                     let addcarform = document.getElementById('add_car'); 
                     let form_data = new FormData(addcarform);
@@ -116,47 +137,80 @@ export default {
 
 
 <style>
+#form_container{
+  padding-left:600px;
+  width:1350px;
+}
+
+#add_car{
+    background-color: white;
+  border: 1px solid black;
+  padding: 30px;
+  border-radius: 5px;
+}
+#formgroup,#formgroup1{
+    display:grid;
+    grid-template-columns: repeat(1);
+}
+
+#formgroup1{
+  padding-bottom: 30px;
+}
+
+.top{
+  display:grid;
+  grid-template-columns: repeat(2,300px);
+    grid-gap: 50px;
+   padding-bottom: 40px;
+}
+
 h1 {
-  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  padding-left: 600px;
 }
-form {
-  max-width: 420px;
-  margin: 30px auto;
-  border: 2px black solid;
-  background: white;
-  border-radius: 10px;
-  text-align: left;
-  padding: 40px;
-}
-label {
-  color: #aaa;
-  display: inline-block;
-  margin: 25px 0 15px;
-  font-size: 0.6em;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: bold;
-}
-input,
-textarea {
-  width: 100%;
-  display: block;
-  box-sizing: border-box;
-  border: none;
-  border-bottom: 1px solid;
-  color: #555;
-}
-button {
-  background: limegreen;
+
+.send {
+  background: rgb(53, 193, 53);
   border: 0;
-  padding: 10px 20px;
-  margin-top: 20px;
+  padding-left:60px;
+  padding-right: 60px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   color: white;
-  border-radius: 20px;
+  font-weight: bold;
+  border-radius: 5px;
   justify-content: center;
 }
-.send {
-  text-align: center;
-  background: rgb(53, 128, 53);
+
+#formgroup input[type="text"]{
+    padding: 10px;
+    border-radius: 5px;
+    border:1px solid rgb(188, 188, 188);
+}
+
+#photo{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+select{
+    width: 278px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+     border:1px solid rgb(188, 188, 188);
+
+}
+
+#description{
+    border:1px solid rgb(188, 188, 188);
+}
+
+label{
+    color: gray;
+    font-weight: bold;
+    padding-bottom: 5px;
 }
 </style>
