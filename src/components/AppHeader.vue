@@ -1,8 +1,14 @@
 <template>
+<link rel="stylesheet" 
+        href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" 
+        integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" 
+        crossorigin="anonymous">
   <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">United Auto Sales</a>
+        <a class="navbar-brand" href="/" id="main"><i id="home" class="fas fa-car"></i> United Auto Sales</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -17,16 +23,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <RouterLink to="/" class="nav-link active">Home</RouterLink>
+              <RouterLink class="nav-link" to="/register" v-if="user_id==''">Register</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/about">About</RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink class="nav-link" to="/register">Register</RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink class="nav-link" to="/login">Login</RouterLink>
+              <RouterLink class="nav-link" to="/login" v-if="user_id==''">Login</RouterLink>
             </li>
             <li class="nav-item">
               <RouterLink class="nav-link" to="/explore">Explore</RouterLink>
@@ -88,5 +88,12 @@ export default {
 </script>
 
 <style>
-/* Add any component specific styles here */
+#home{
+  color: white;
+}
+
+#main{
+  padding-left: 30px;
+  padding-right: 220px;
+}
 </style>
