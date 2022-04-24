@@ -1,7 +1,7 @@
 <template>
-    <div class="register container">     
-        <Register /> 
-     </div> 
+    
+    <Register /> 
+ 
 </template> 
 
 

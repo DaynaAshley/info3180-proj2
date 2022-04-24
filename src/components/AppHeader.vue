@@ -2,7 +2,7 @@
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">Lab 7</a>
+        <a class="navbar-brand" href="/">United Auto Sales</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -39,6 +39,9 @@
               
               <router-link :to="{ name: 'userdetails', params: { user_id } }" class="nav-link">My Profile</router-link>
             </li>
+            <li class="nav-item" v-if="user_id!=''">
+              <router-link :to="{ name: 'logout', params: { user_id } }" class="nav-link">Logout</router-link>
+           </li>
           </ul>
         </div>
       </div>

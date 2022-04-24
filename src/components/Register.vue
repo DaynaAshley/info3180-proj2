@@ -1,12 +1,12 @@
 <template>
     <h1>Register New User</h1>
-    <form  id="register" name="register" method="POST" enctype="multipart/form-data" @submit.prevent="register">
+    <form  id="register" name="register" method="POST" enctype="multipart/form-data" @submit.prevent="register" v-if="!savingSuccessful">
 
     <label>Username</label>
     <input type="text" name="username" id="username" required/>
 
     <label>Password</label>
-    <input type="text" name="password" id="password" required/>
+    <input type="password" name="password" id="password" required/>
 
     <label>Fullname</label>
     <input type="text" name="fullname" id="name" required/>
@@ -29,6 +29,9 @@
     </div>
    
     </form>
+    <div class="success" v-if="savingSuccessful"> 
+    {{ this.text }} 
+</div>
 </template>
 
 <script>
@@ -36,7 +39,8 @@
 export default {   
         data() {     
             return {
-                 csrf_token: '' 
+                 csrf_token: '',
+                 text: "Successfully Registered!"
             }  
             }, 
         created() {     
@@ -49,7 +53,7 @@ export default {
                     let registerform = document.getElementById('register'); 
                     let form_data = new FormData(registerform);
                     fetch("/api/register", {     
-                        method: 'POST', 
+                        method:'POST', 
                         body: form_data,         
                         headers: { 
                             'X-CSRFToken': this.csrf_token         
@@ -59,12 +63,13 @@ export default {
                         return response.json();     
                         })     
                         .then(function (data) {         
-                            // display a success message         
+                            // display a success message        
                             console.log(data);    
                              })     
                             .catch(function (error) {         
                                 console.log(error);     
                                 });
+                        this.$router.push({name:'login'})   
                 },
                 getCsrfToken() {     
                     let self = this;     
@@ -78,3 +83,52 @@ export default {
             }
 };
 </script>
+
+
+<style>
+h1{
+    text-align: center;
+}
+ form {
+    max-width: 420px;
+    margin: 30px auto;
+    border: 2px black solid;
+    background:white; 
+    border-radius: 10px;
+    text-align: left;
+    padding: 40px;
+}
+
+label {
+    color: #aaa;
+    display: inline-block;
+    margin: 25px 0 15px;
+    font-size: 0.6em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+input, textarea {
+
+    width: 100%;
+    display: block; 
+    box-sizing: border-box; 
+    border: none; 
+    border-bottom: 1px solid;
+    color: #555;
+}
+button {
+    background: limegreen;
+    border: 0;
+    padding: 10px 20px; 
+    margin-top: 20px; 
+    color: white; 
+    border-radius: 20px;
+    justify-content: center;
+}
+ 
+.send {
+    text-align: center;
+    background:rgb(53, 128, 53)
+}
+</style>
