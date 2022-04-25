@@ -94,7 +94,7 @@ export default {
               } 
             },
              created() {  
-                 localStorage.setItem('reloaded1', 'false');
+                localStorage.setItem('reloaded1', 'false');
                 const reloaded = localStorage.getItem('reloaded');
                 if (reloaded !== 'true') {
                     localStorage.setItem('reloaded', 'true');

@@ -58,7 +58,6 @@ export default {
                             .catch(function (error) {         
                                 console.log(error);     
                                 });
-                        this.$router.push({name:'explore'})
                 },
                 getCsrfToken() {     
                     let self = this;     

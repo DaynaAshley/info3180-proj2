@@ -7,7 +7,7 @@ This file creates your application.
 
 
 from app import app,db,login_manager
-from flask import request, jsonify,g, make_response
+from flask import request, jsonify,g, make_response,send_file
 import os
 from app.models import *
 from flask_wtf.csrf import generate_csrf
@@ -28,7 +28,7 @@ import datetime
 
 @app.route('/')
 def index():
-    return jsonify(message="This is the beginning of our API")
+    return send_file(os.path.join('../dist/', 'index.html'))
 
 
 def requires_auth(f):

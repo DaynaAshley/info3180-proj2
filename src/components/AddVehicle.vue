@@ -60,7 +60,7 @@
     <input type="file" name="photo" id="photo" required />
 </div>
     <div class="btnpos">
-      <button @click="explore()" class="send">Save</button>
+      <button  class="send">Save</button>
     </div>
   </form>
   </div>
@@ -76,8 +76,6 @@ export default {
             }, 
         created() {     
                 this.getCsrfToken(); 
-                localStorage.setItem('reloaded1', 'false');
-                 localStorage.setItem('reloaded', 'false');
             },
             
             methods: { 
@@ -108,6 +106,7 @@ export default {
                             .catch(function (error) {         
                                 console.log(error);     
                                 });
+                          this.$router.push('/explore');
                 },
                 getCsrfToken() {     
                     let self = this;     

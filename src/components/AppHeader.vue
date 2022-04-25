@@ -98,7 +98,7 @@ export default {
 }
 
 #loginto{
-  padding-left: 1820px;
+  padding-left: 1200px;
 }
 
 #lg{
